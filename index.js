@@ -97,6 +97,71 @@ async function printImageAndName(pokemonName) {
 }
 printImageAndName("pikachu").then(console.log);
 
+function printImageAndName(nombre, imagenUrl) {
+  const section = document.createElement("section");
+
+  const img = document.createElement("img");
+  img.src = imagenUrl;
+  img.alt = nombre;
+
+  const h1 = document.createElement("h1");
+  h1.textContent = nombre;
+
+  section.append(img);
+  section.append(h1);
+
+  document.body.append(section); 
+ 
+}
+
+/*Ejercicio 4.- Declara una función **getRandomDogImage** 
+que retorne la url de la imagen de un perro aleatorio
+Recordatorio, la API de perritos era 'https://dog.ceo/dog-api/'*/
+
+async function getRandomDogImage(){
+  try{
+    const response=await fetch(`https://dog.ceo/api/breeds/image/random`);
+    const data=response.json();
+  return data.message; 
+  } catch (error) {
+    console.error("Error al obtener la imagen del perro:", error);
+    return null;
+  }
+}
+getRandomDogImage().then(url => {
+  if (url) {
+    console.log("Imagen aleatoria de perro:", url);
+  }
+});
+
+/*Ejercicio 5.- Declara una función **getRandomPokemonImage** 
+que retorne la url de la imagen de un pokemon aleatorio.*/
+
+async function getRandomPokemonImage() {
+  try {
+    const randomId = Math.floor(Math.random() * 898) + 1; // Hay 898 Pokémon en la api
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${randomId}`);
+    const data = await response.json();
+    return data.sprites.front_default; 
+  } catch (error) {
+    console.error("Error al obtener la imagen del Pokémon:", error);
+    return null;
+  }
+}
+
+Ejercicio 6.- Declara una función **printPugVsPikachu** que pinte la batalla entre "Pug" y "Pikachu" (no se testea)
+
+
+### Ejercicios con Rick and Morty ###
+
+Usando la api de Rick and Morty https://rickandmortyapi.com/ y sólo async/await:
+
+Ejercicio 7.- Declara una función **getRandomCharacter** que retorne un personaje aleatorio.
+
+Ejercicio 8.- Declara una función **getRandomCharacterInfo** que retorne de un personaje su imagen, nombre, episodios en los que aparece y el nombre del primer episodio en el que aparece + fecha de estreno, tendrás que hacer otro fetch para llegar a los ultimos datos. Formato de retorno => (return {img, name, episodes, firstEpisode, dateEpisode})
+
+Ejercicio 9.- Pinta los anteriores datos en el DOM (no se testea)
+
 
 
 
