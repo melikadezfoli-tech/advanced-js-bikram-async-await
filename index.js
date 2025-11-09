@@ -43,6 +43,66 @@ getRandomPokemon().then(pokemon=>{
   }
 });
 
+//Ejericio 2.- Declara una funcion **getImageAndName** que retorne el nombre y la URL de la imagen de un pokemon => (return {img, name})
+
+async function getImageAndName(pokemonName) {
+  try {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName.toLowerCase()}`);
+    if (!response.ok) {
+      return (`No se pudo obtener el Pokémon: ${pokemonName}`);
+    }
+
+    const data = await response.json();
+    return {
+      name: data.name,
+      imageUrl: data.sprites.front_default
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      name: null,
+      imageUrl: null
+    };
+  }
+}
+
+getImageAndName("pikachu").then(console.log)
+
+/*Ejercicio 3.- Declara una funcion **printImageAndName** que retorne 
+el string necesario para pintar la imagen y el nombre del pokemon en 
+el DOM de la siguiente forma:
+<section>
+    <img src="url de imagen" alt="nombre del pokemon">
+    <h1>Nombre del pokemon</h1>
+</section>*/
+async function printImageAndName(pokemonName) {
+  try {
+    const response = await getImageAndName(pokemonName);
+    
+    if (!response.name || !response.imageUrl) {
+      return `No se pudo obtener el nombre y la imagen del Pokémon: ${pokemonName}`;
+    }
+
+    return {
+      name: response.name,
+      imageUrl: response.imageUrl
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      name: null,
+      imageUrl: null
+    };
+  }
+}
+printImageAndName("pikachu").then(console.log);
+
+
+
+
+
+
+
 
 
 
